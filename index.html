@@ -1,0 +1,285 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>System Security Alert</title>
+	
+	<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #050a08;
+        color: #00ff66;
+        font-family: Consolas, monospace;
+        text-align: center;
+        padding: 100px 20px;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 32px;
+        color: #00ff66;
+        text-shadow: 0 0 15px #00ff66;
+        letter-spacing: 3px;
+    }
+
+    h2 {
+        color: white;
+        margin-top: 40px;
+    }
+
+    p {
+        color: #9affbd;
+        font-size: 16px;
+    }
+
+    button {
+        padding: 15px 45px;
+        margin: 15px;
+        border: 1px solid #00ff66;
+        background: transparent;
+        color: #00ff66;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background: #00ff66;
+        color: black;
+        box-shadow: 0 0 20px #00ff66;
+    }
+
+    #response {
+        margin-top: 30px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+	
+	#scanPanel {
+        margin: 40px auto;
+        max-width: 450px;
+        padding: 20px;
+        border: 1px solid #00ff66;
+        border-radius: 8px;
+        box-shadow: 0 0 15px #003d20;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+
+    .progress-container {
+        width: 100%;
+        height: 18px;
+        background: #17231c;
+        border: 1px solid #00ff66;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    #progressBar {
+        width: 0%;
+        height: 100%;
+        background: #00ff66;
+        box-shadow: 0 0 15px #00ff66;
+        transition: width 0.15s;
+    }
+
+    #percentage {
+        color: #00ff66;
+        font-size: 22px;
+    }
+	#terminalLog {
+        background: #000;
+        color: #00ff66;
+        text-align: left;
+        padding: 15px;
+        margin-top: 20px;
+        height: 130px;
+        overflow-y: auto;
+        border: 1px solid #164d2d;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    #warning {
+        color: #ff3030;
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow: 0 0 12px red;
+        animation: blink 0.8s infinite;
+    }
+
+    #countdown {
+        color: white;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0.3; }
+    }
+	
+	
+</style>
+
+</head>
+
+<body>
+
+    <h1>SYSTEM NOTIFICATION</h1>
+
+    <p>A mysterious file is waiting for you.</p>
+
+    <h2>Do you want to open it?</h2>
+
+    <button id="yesButton">YES</button>
+    <button id="noButton">NO</button>
+
+    <p id="response"></p>
+	
+	<div id="scanPanel" hidden>
+
+    <h2> SYSTEM SCAN IN PROGRESS </h2>
+
+    <p id="scanText">Initializing...</p>
+
+    <div class="progress-container">
+        <div id="progressBar"></div>
+    </div>
+
+    <p id="percentage">0%</p>
+<div id="terminalLog"></div>
+
+<p id="warning" hidden></p>
+
+<p id="countdown"></p>
+</div>
+
+	<script>
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const response = document.getElementById("response");
+
+    const scanPanel = document.getElementById("scanPanel");
+    const scanText = document.getElementById("scanText");
+    const progressBar = document.getElementById("progressBar");
+    const percentage = document.getElementById("percentage");
+
+    const terminalLog = document.getElementById("terminalLog");
+    const warning = document.getElementById("warning");
+    const countdown = document.getElementById("countdown");
+
+    const heading = document.querySelector("h1");
+    const description = document.querySelector("body > p");
+
+    function addLog(text) {
+        const line = document.createElement("div");
+        line.textContent = "> " + text;
+        terminalLog.appendChild(line);
+        terminalLog.scrollTop = terminalLog.scrollHeight;
+    }
+
+    noButton.addEventListener("click", function() {
+        response.textContent = "NICE TRY! 😂 SAY YES!";
+    });
+
+    yesButton.addEventListener("click", function() {
+
+        yesButton.style.display = "none";
+        noButton.style.display = "none";
+
+        heading.textContent = "INITIALIZING SYSTEM...";
+        description.textContent = "Please wait. Preparing your file...";
+
+        scanPanel.hidden = false;
+
+        addLog("Starting simulation...");
+        addLog("Loading system interface...");
+        addLog("Preparing visual effects...");
+
+        const messages = [
+            "Connecting to system...",
+            "Checking security protocols...",
+            "Analyzing digital environment...",
+            "Loading mysterious file...",
+            "Finalizing simulation..."
+        ];
+
+        let progress = 0;
+        let messageIndex = -1;
+
+        const scanning = setInterval(function() {
+
+            progress += Math.floor(Math.random() * 4) + 1;
+
+            if (progress > 100) progress = 100;
+
+            progressBar.style.width = progress + "%";
+            percentage.textContent = progress + "%";
+
+            const newIndex = Math.min(
+                Math.floor(progress / 20),
+                messages.length - 1
+            );
+
+            if (newIndex !== messageIndex) {
+                messageIndex = newIndex;
+                scanText.textContent = messages[messageIndex];
+                addLog(messages[messageIndex]);
+            }
+
+            if (progress >= 100) {
+
+                clearInterval(scanning);
+
+                addLog("Simulation completed.");
+                addLog("Preparing final message...");
+
+                warning.hidden = false;
+                warning.textContent = "⚠ SYSTEM ALERT ⚠";
+
+                let seconds = 3;
+                countdown.textContent = seconds;
+
+                const timer = setInterval(function() {
+
+                    seconds--;
+                    countdown.textContent = seconds;
+
+                    if (seconds <= 0) {
+
+                        clearInterval(timer);
+
+                        scanPanel.hidden = true;
+
+                        heading.textContent = "YOU GOT PRANKED! 😂";
+
+                        description.textContent =
+                            "Relax! Your computer is completely fine.";
+
+                        warning.hidden = true;
+                        countdown.textContent = "";
+
+                        response.textContent =
+                            "IT WAS JUST A JOKE! NOTHING WAS INSTALLED.";
+
+                    }
+
+                }, 1000);
+            }
+
+        }, 100);
+    });
+</script>
+
+</body>
+
+
+</html>
