@@ -1,4 +1,4 @@
-System Security Prank 😂
+System Security Prank 
 
 an interactive website project, built using HTML, CSS and JavaScript.
 
@@ -26,4 +26,4 @@ This is a harmless entertainment project. It does not scan files, access persona
 
 Created By
 
-My first GitHub project 🚀
+My first GitHub project 
